@@ -1,0 +1,38 @@
+{
+  "name": "relative",
+  "version": "0.1.0",
+  "description": "Easily calculate the relative path from file A to file B.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jonschlinkert/relative.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jonschlinkert/relative/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/jonschlinkert/relative/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "dependencies": {
+    "fs-utils": "~0.2.1"
+  },
+  "devDependencies": {
+    "chai": "~1.9.0",
+    "mocha": "~1.17.1"
+  },
+  "keywords": [
+    "relative",
+    "relative path",
+    "path.relative",
+    "path"
+  ]
+}
