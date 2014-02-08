@@ -2,12 +2,9 @@
 
 > Easily calculate the relative path from file A to file B in Node.js project.
 
-**Calculates correctly from:**
+## Installation
 
-* File to directory
-* File to file
-* Directory to file
-* Directory to directory
+Install with [npm](npmjs.org):
 
 ```bash
 npm i relative --save
@@ -23,6 +20,14 @@ relative(from, to);
 relative('test/fixtures/foo.txt', 'docs');
 // => '../../docs'
 ```
+
+**Calculates correctly from:**
+
+* File to directory
+* File to file
+* Directory to file
+* Directory to directory
+
 
 ### relative.toBase
 
