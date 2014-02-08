@@ -1,6 +1,13 @@
 # relative [![NPM version](https://badge.fury.io/js/relative.png)](http://badge.fury.io/js/relative)
 
-> Easily calculate the relative path from file A to file B
+> Easily calculate the relative path from file A to file B in Node.js project.
+
+**Calculates correctly from:**
+
+* File to directory
+* File to file
+* Directory to file
+* Directory to directory
 
 ```bash
 npm i relative --save
@@ -17,6 +24,21 @@ relative('test/fixtures/foo.txt', 'docs');
 // => '../../docs'
 ```
 
+### relative.toBase
+
+Get the relative path from the given base path.
+
+```js
+relative.toBase(basepath, filepath)
+```
+
+Example:
+
+```js
+relative.toBase('one/two', 'one/two/three/four.json')
+//=> three/four.json
+```
+
 ## Author
 
 **Jon Schlinkert**
@@ -26,5 +48,5 @@ relative('test/fixtures/foo.txt', 'docs');
 
 
 ## License
-Copyright (c) 2014 [Jon Schlinkert](http://twitter.com/jonschlinkert), [Brian Woodward](http://twitter.com/doowb), contributors.
+Copyright (c) 2014 [Jon Schlinkert](http://twitter.com/jonschlinkert), contributors.
 Released under the [MIT license](./LICENSE-MIT)
