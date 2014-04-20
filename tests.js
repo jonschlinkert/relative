@@ -10,7 +10,7 @@ var expect = require('chai').expect;
 var path = require('path');
 var cwd = process.cwd();
 
-var relative = require('../');
+var relative = require('./');
 
 describe('relative', function() {
   it('should resolve the relative path from a file to a file', function() {

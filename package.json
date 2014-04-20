@@ -1,6 +1,6 @@
 {
   "name": "relative",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "Easily calculate the relative path from file A to file B in Node.js project. Will calculate correctly from a file to a directory, file to file, directory to file, and directory to directory.",
   "repository": {
     "type": "git",
@@ -21,9 +21,6 @@
   },
   "engines": {
     "node": ">= 0.8.0"
-  },
-  "dependencies": {
-    "fs-utils": "~0.3.0"
   },
   "devDependencies": {
     "chai": "~1.9.0",
