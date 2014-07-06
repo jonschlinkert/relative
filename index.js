@@ -76,25 +76,3 @@ relative.toBase = function (basepath, filepath) {
   // Remove leading slash.
   return filepath.replace(/^\//, '');
 };
-
-
-/**
- * ## .isRelative
- *
- * Check the path to see if it _can be_ relative. This is really
- * just a disqualification of paths that _cannot be_ relative.
- *
- * **Example**:
- *
- * ```js
- * relative.isRelative('test/fixtures/docs/new/file.txt');
- * //=> true
- * ```
- *
- * @param {String} `filepath` Path to test
- * @return {Boolean}
- */
-
-relative.isRelative = function (filepath) {
-  return !/^([a-z]{2,10}:\/)?\//i.test(filepath);
-};
