@@ -4,8 +4,11 @@
  * Licensed under the MIT license.
  */
 
-const fs = require('fs');
-const path = require('path');
+'use strict';
+
+var fs = require('fs');
+var path = require('path');
+var normalize = require('normalize-path');
 
 
 // True if the filepath is a directory.
@@ -17,37 +20,47 @@ function isDir() {
   return fs.statSync(filepath).isDirectory();
 }
 
-// Unixify all slashes
-function normalizeSlash(str) {
-  return str.replace(/\\/g, '/');
-}
-
 
 /**
- * Return the relative path from
- * @param   {[type]}  from  [description]
- * @param   {[type]}  to    [description]
- * @return  {[type]}        [description]
+ * ## relative
+ *
+ * Return the relative path from `a` to `b`.
+ *
+ * **Example**:
+ *
+ * ```js
+ * var relative = require('relative');
+ * relative('test/fixtures/foo.txt', 'docs/new/file.txt');
+ * //=> '../../docs/new/file.txt'
+ * ```
+ *
+ * @param   {String} `from`
+ * @param   {String} `to`
+ * @return  {String}
  */
 
-var relative = module.exports = function(from, to) {
-  if(arguments.length === 1) {
-    to = from;
-    from = process.cwd();
-  }
-
-  from = !isDir(from) ? path.dirname(from) : from;
-  var rel = path.relative(path.resolve(from), path.resolve(to));
-  return normalizeSlash(rel);
+var relative = module.exports = function(a, b) {
+  if(arguments.length === 1) {b = a; a = process.cwd();}
+  a = !isDir(a) ? path.dirname(a) : a;
+  var rel = path.relative(path.resolve(a), path.resolve(b));
+  return normalize(rel);
 };
 
 
 /**
- * Get the relative path from the given
- * base path.
+ * ## .toBase
  *
- * @param   {String}  basepath  The base directory
- * @param   {String}  filepath  The full filepath
+ * Get the path relative to the given base path.
+ *
+ * **Example**:
+ *
+ * ```js
+ * relative.toBase('test/fixtures', 'test/fixtures/docs/new/file.txt');
+ * //=> 'docs/new/file.txt'
+ * ```
+ *
+ * @param   {String}  `basepath`  The base directory
+ * @param   {String}  `filepath`  The full filepath
  * @return  {String}            The relative path
  */
 
@@ -58,7 +71,7 @@ relative.toBase = function (basepath, filepath) {
   if (filepath.indexOf(basepath) === 0) {
     filepath = filepath.replace(basepath, '');
   }
-  filepath = normalizeSlash(filepath);
+  filepath = normalize(filepath);
 
   // Remove leading slash.
   return filepath.replace(/^\//, '');
@@ -66,11 +79,19 @@ relative.toBase = function (basepath, filepath) {
 
 
 /**
- * Check the path to see if it _can be_ relative.
- * This is really just a disqualification of
- * paths that _cannot be_ relative.
+ * ## .isRelative
  *
- * @param {String} filepath Path to test
+ * Check the path to see if it _can be_ relative. This is really
+ * just a disqualification of paths that _cannot be_ relative.
+ *
+ * **Example**:
+ *
+ * ```js
+ * relative.isRelative('test/fixtures/docs/new/file.txt');
+ * //=> true
+ * ```
+ *
+ * @param {String} `filepath` Path to test
  * @return {Boolean}
  */
 
