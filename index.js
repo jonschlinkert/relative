@@ -8,22 +8,9 @@
 
 var fs = require('fs');
 var path = require('path');
-var normalize = require('normalize-path');
-
-
-// True if the filepath is a directory.
-function isDir() {
-  var filepath = path.join.apply(path, arguments);
-  if (!fs.existsSync(filepath)) {
-    return false;
-  }
-  return fs.statSync(filepath).isDirectory();
-}
-
+var isDir = require('is-directory');
 
 /**
- * ## relative
- *
  * Return the relative path from `a` to `b`.
  *
  * **Example**:
@@ -39,17 +26,24 @@ function isDir() {
  * @return  {String}
  */
 
-var relative = module.exports = function(a, b) {
-  if(arguments.length === 1) {b = a; a = process.cwd();}
-  a = !isDir(a) ? path.dirname(a) : a;
-  var rel = path.relative(path.resolve(a), path.resolve(b));
-  return normalize(rel);
+var relative = module.exports = function relative(from, to) {
+  if (arguments.length === 1) {
+    to = from;
+    from = process.cwd();
+  }
+
+  if (!isDir(from)) {
+    from = path.dirname(from);
+  }
+
+  from = path.resolve(from);
+  to = path.resolve(to);
+
+  return path.relative(from, to);
 };
 
 
 /**
- * ## .toBase
- *
  * Get the path relative to the given base path.
  *
  * **Example**:
@@ -59,9 +53,9 @@ var relative = module.exports = function(a, b) {
  * //=> 'docs/new/file.txt'
  * ```
  *
- * @param   {String}  `basepath`  The base directory
- * @param   {String}  `filepath`  The full filepath
- * @return  {String}            The relative path
+ * @param {String} `basepath` The base directory
+ * @param {String} `filepath` The full filepath
+ * @return {String} The relative path
  */
 
 relative.toBase = function (basepath, filepath) {
@@ -71,8 +65,7 @@ relative.toBase = function (basepath, filepath) {
   if (filepath.indexOf(basepath) === 0) {
     filepath = filepath.replace(basepath, '');
   }
-  filepath = normalize(filepath);
 
-  // Remove leading slash.
-  return filepath.replace(/^\//, '');
+  // Remove leading slash if one was created
+  return filepath.replace(/^[\\\/]*/, '');
 };
