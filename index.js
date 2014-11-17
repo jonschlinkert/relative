@@ -24,6 +24,7 @@ var isDir = require('is-directory');
  * @param   {String} `from`
  * @param   {String} `to`
  * @return  {String}
+ * @api public
  */
 
 var relative = module.exports = function relative(from, to) {
@@ -56,9 +57,10 @@ var relative = module.exports = function relative(from, to) {
  * @param {String} `basepath` The base directory
  * @param {String} `filepath` The full filepath
  * @return {String} The relative path
+ * @api public
  */
 
-relative.toBase = function (basepath, filepath) {
+relative.toBase = function toBase(basepath, filepath) {
   filepath = path.resolve(filepath);
   basepath = path.resolve(basepath);
 
