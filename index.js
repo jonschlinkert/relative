@@ -1,13 +1,12 @@
-/**
- * relative <https://github.com/jonschlinkert/relative>
- * Copyright (c) 2014 Jon Schlinkert, contributors.
- * Licensed under the MIT license.
- */
-
 'use strict';
 
 var path = require('path');
-var isDir = require('is-directory');
+
+/**
+ * Expose `relative`
+ */
+
+module.exports = relative;
 
 /**
  * Return the relative path from `a` to `b`.
@@ -16,8 +15,8 @@ var isDir = require('is-directory');
  *
  * ```js
  * var relative = require('relative');
- * relative('test/fixtures/foo.txt', 'docs/new/file.txt');
- * //=> '../../docs/new/file.txt'
+ * relative('a/b/foo.txt', 'c/d/file.txt');
+ * //=> '../../c/d/file.txt'
  * ```
  *
  * @param   {String} `from`
@@ -26,22 +25,20 @@ var isDir = require('is-directory');
  * @api public
  */
 
-var relative = module.exports = function relative(from, to) {
+function relative(a, b) {
   if (arguments.length === 1) {
-    to = from;
-    from = process.cwd();
+    b = a; a = process.cwd();
   }
 
-  if (!isDir(from)) {
-    from = path.dirname(from);
+  a = normalize(path.resolve(a));
+  b = normalize(path.resolve(b));
+
+  if (/\./.test(path.basename(a))) {
+    a = path.dirname(a);
   }
 
-  from = path.resolve(from);
-  to = path.resolve(to);
-
-  return path.relative(from, to);
-};
-
+  return path.relative(a, b);
+}
 
 /**
  * Get the path relative to the given base path.
@@ -49,24 +46,37 @@ var relative = module.exports = function relative(from, to) {
  * **Example**:
  *
  * ```js
- * relative.toBase('test/fixtures', 'test/fixtures/docs/new/file.txt');
- * //=> 'docs/new/file.txt'
+ * relative.toBase('a/b', 'a/b/c/d/file.txt');
+ * //=> 'c/d/file.txt'
  * ```
  *
- * @param {String} `basepath` The base directory
- * @param {String} `filepath` The full filepath
+ * @param {String} `base` The base directory
+ * @param {String} `fp` The full filepath
  * @return {String} The relative path
  * @api public
  */
 
-relative.toBase = function toBase(basepath, filepath) {
-  filepath = path.resolve(filepath);
-  basepath = path.resolve(basepath);
+relative.toBase = function toBase(base, fp) {
+  base = normalize(path.resolve(base));
+  fp = normalize(path.resolve(fp));
 
-  if (filepath.indexOf(basepath) === 0) {
-    filepath = filepath.replace(basepath, '');
+  if (fp.indexOf(base) === 0) {
+    fp = fp.replace(base, '');
   }
 
-  // Remove leading slash if one was created
-  return filepath.replace(/^[\\\/]*/, '');
+  // Remove leading slash, if created
+  return fp.replace(/^[\\\/]*/, '');
 };
+
+
+/**
+ * Normalize slashes in paths. This is necessary b/c
+ * paths are not calculated the same by node.js when
+ * windows paths are used.
+ *
+ * @api private
+ */
+
+function normalize(str) {
+  return str.replace(/[\\\/]+/g, '/');
+}
