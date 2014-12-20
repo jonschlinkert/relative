@@ -1,17 +1,20 @@
 /**
  * relative <https://github.com/jonschlinkert/relative>
- * Copyright (c) 2014 Jon Schlinkert, contributors.
+ *
+ * Copyright (c) 2014 Jon Schlinkert
  * Licensed under the MIT license.
  */
 
 'use strict';
 
 var should = require('should');
-var normalize = require('normalize-path');
 var path = require('path');
-var cwd = process.cwd();
 var relative = require('./');
+var cwd = process.cwd();
 
+function normalize(str) {
+  return str.replace(/[\\\/]+/g, '/');
+}
 
 describe('relative', function() {
   it('should resolve the relative path from a file to a file', function() {
@@ -19,15 +22,15 @@ describe('relative', function() {
   });
 
   it('should resolve the relative path from a file to a directory', function() {
-    normalize(relative('test/fixtures/foo.txt', 'docs')).should.equal('../../docs');
+    normalize(relative('test\\fixtures\\foo.txt', 'docs')).should.equal('../../docs');
   });
 
   it('should resolve the relative path from a directory to a directory', function() {
-    normalize(relative('test/fixtures', 'docs')).should.equal('../docs');
+    normalize(relative('test/fixtures', 'docs')).should.equal('../../docs');
   });
 
   it('should resolve the relative path from a directory to a file', function() {
-    normalize(relative('test/fixtures', 'docs/foo.txt')).should.equal('../docs/foo.txt');
+    normalize(relative('test/fixtures', 'docs/foo.txt')).should.equal('../../docs/foo.txt');
   });
 
   it('should resolve the relative path to process.cwd()', function() {
@@ -53,12 +56,12 @@ describe('normalize path', function() {
 
   it('should resolve the relative path from a directory to a directory', function() {
     var actual = relative('test/fixtures', 'docs', true)
-    normalize(actual).should.equal('../docs');
+    normalize(actual).should.equal('../../docs');
   });
 
   it('should resolve the relative path from a directory to a file', function() {
     var actual = relative('test/fixtures', 'docs/foo.txt', true)
-    normalize(actual).should.equal('../docs/foo.txt');
+    normalize(actual).should.equal('../../docs/foo.txt');
   });
 
   it('should resolve the relative path to process.cwd()', function() {
