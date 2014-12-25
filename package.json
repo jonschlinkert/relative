@@ -1,6 +1,6 @@
 {
   "name": "relative",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Get the relative filepath from path A to path B. Calculates from file-to-directory, file-to-file, directory-to-file, and directory-to-directory.",
   "author": {
     "name": "Jon Schlinkert",
