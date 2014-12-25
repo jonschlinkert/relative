@@ -37,7 +37,8 @@ function relative(a, b) {
     a = path.dirname(a);
   }
 
-  return path.relative(a, b);
+  var relativePath = path.relative(a, b);
+  return relativePath.charAt(0) !== '.' ? './' + relativePath : relativePath;
 }
 
 /**
