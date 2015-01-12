@@ -28,6 +28,7 @@ describe('relative', function() {
   });
 
   it('should resolve the relative path from a directory to a directory', function() {
+    normalize(relative('test', 'test')).should.equal('./');
     normalize(relative('test/fixtures', 'docs')).should.equal('../../docs');
     normalize(relative('test/foo', 'test/bar')).should.equal('../bar');
   });
