@@ -35,6 +35,8 @@ describe('relative', function() {
   it('should resolve the relative path from a directory to a file', function() {
     normalize(relative('test/fixtures', 'docs/foo.txt')).should.equal('../../docs/foo.txt');
     normalize(relative('test/fixtures', 'test/foo.txt')).should.equal('../foo.txt');
+    normalize(relative('test-with-dashes', 'test-with-dashes/fixtures/foo.txt')).should.eql('./fixtures/foo.txt');
+    normalize(relative('test.with.dots', 'test.with.dots/fixtures/foo.txt')).should.eql('./fixtures/foo.txt');
   });
 
   it('should resolve the relative path to process.cwd()', function() {
