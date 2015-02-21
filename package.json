@@ -1,7 +1,7 @@
 {
   "name": "relative",
   "description": "Get the relative filepath from path A to path B. Calculates from file-to-directory, file-to-file, directory-to-file, and directory-to-directory.",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "author": {
     "name": "Jon Schlinkert",
     "url": "https://github.com/jonschlinkert"
