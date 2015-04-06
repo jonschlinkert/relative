@@ -23,7 +23,30 @@ function rel() {
 }
 
 describe('relative', function() {
+  it('should throw an error on bad args:', function() {
+    (function() {
+      rel();
+    }).should.throw('relative expects a string.');
+
+    (function() {
+      rel(null);
+    }).should.throw('relative expects a string.');
+
+    (function() {
+      rel({});
+    }).should.throw('relative expects a string.');
+
+    (function() {
+      rel([]);
+    }).should.throw('relative expects a string.');
+  });
+
+  it('should return an empty string', function() {
+    rel('').should.equal('');
+  });
+
   it('should resolve the relative path from a file to a file', function() {
+    rel('', 'dir').should.equal('dir');
     rel('a/b/c.txt', 'd').should.equal('../../d');
     rel('d', 'a/b/c.txt').should.equal('../a/b/c.txt');
     rel('a/b/c.txt', 'd/e/f.txt').should.equal('../../d/e/f.txt');
