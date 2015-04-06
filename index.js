@@ -14,6 +14,12 @@ module.exports = relative;
  */
 
 function relative(a, b, stat) {
+  if (typeof a !== 'string') {
+    throw new TypeError('relative expects a string.');
+  }
+
+  if (a == '' && !b) return a;
+
   var len = arguments.length;
   if (len === 1) {
     b = a; a = process.cwd(); stat = null;
