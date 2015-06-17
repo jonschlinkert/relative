@@ -133,6 +133,12 @@ function isDir(fp, stat) {
     return true;
   }
 
+  if (stat === null) {
+    // try to get the directory info if it hasn't been done yet
+    // to ensure directories containing dots are well handle
+    stat = tryStats(fp);
+  }
+
   if (stat != null && typeof stat === 'object') {
     return stat.isDirectory();
   }
