@@ -34,7 +34,6 @@ function relative(a, b, stat) {
   }
 
   var origB = b;
-  var origA = a;
 
   // see if a slash exists before normalizing
   var slashA = endsWith(a, '/');
