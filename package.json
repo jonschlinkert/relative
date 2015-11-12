@@ -1,7 +1,7 @@
 {
   "name": "relative",
   "description": "Get the relative filepath from path A to path B. Calculates from file-to-directory, file-to-file, directory-to-file, and directory-to-directory.",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "homepage": "https://github.com/jonschlinkert/relative",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "jonschlinkert/relative",
@@ -18,6 +18,9 @@
   },
   "scripts": {
     "test": "mocha"
+  },
+  "dependencies": {
+    "isobject": "^2.0.0"
   },
   "devDependencies": {
     "mocha": "*",
