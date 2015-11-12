@@ -1,5 +1,6 @@
 'use strict';
 
+var isObject = require('isobject');
 var path = require('path');
 var fs = require('fs');
 
@@ -39,8 +40,8 @@ function relative(a, b, stat) {
   var slashA = endsWith(a, '/');
   var slashB = endsWith(b, '/');
 
-  a = normalize(a);
-  b = normalize(b);
+  a = unixify(a);
+  b = unixify(b);
 
   // if `a` had a slash, add it back
   if (slashA) { a = a + '/'; }
@@ -68,8 +69,8 @@ function relative(a, b, stat) {
  */
 
 relative.toBase = function toBase(base, fp) {
-  base = normalize(base);
-  fp = normalize(fp);
+  base = unixify(base);
+  fp = unixify(fp);
 
   var res = fp.slice(base.length);
   if (res.charAt(0) === '/') {
@@ -79,12 +80,12 @@ relative.toBase = function toBase(base, fp) {
 };
 
 /**
- * Normalize slashes in paths. This is necessary b/c
+ * Normalize slashes in paths to unix slashes. This is necessary since
  * paths are not calculated the same by node.js when
  * windows paths are used.
  */
 
-function normalize(str) {
+function unixify(str) {
   return str.replace(/[\\\/]+/g, '/');
 }
 
@@ -138,7 +139,7 @@ function isDir(fp, stat) {
     stat = tryStats(fp);
   }
 
-  if (stat != null && typeof stat === 'object') {
+  if (isObject(stat) && typeof stat.isDirectory === 'function') {
     return stat.isDirectory();
   }
 
