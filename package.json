@@ -20,7 +20,8 @@
     "test": "mocha"
   },
   "dependencies": {
-    "isobject": "^2.0.0"
+    "isobject": "^2.0.0",
+    "@types/node": "^10.1.2"
   },
   "devDependencies": {
     "mocha": "*",
